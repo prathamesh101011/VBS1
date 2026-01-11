@@ -16,6 +16,7 @@ public class HistoryController {
     @Autowired
     HistoryRepo historyRepo;
 
+
     @GetMapping("/histories")
     public List<History> getHistories()
     {
