@@ -2,7 +2,6 @@ package com.vbs.demo.controller;
 
 import com.vbs.demo.dto.TransactionDto;
 import com.vbs.demo.dto.TransferDto;
-import com.vbs.demo.models.Notification;
 import com.vbs.demo.models.Transaction;
 import com.vbs.demo.models.User;
 import com.vbs.demo.repositories.TransactionRepo;
@@ -20,8 +19,6 @@ public class TransactionController {
     TransactionRepo transactionRepo;
     @Autowired
     UserRepo userRepo;
-    @Autowired
-    NotificationRepo notificationRepo;
 
     @PostMapping("/deposit")
     public String deposit(@RequestBody TransactionDto obj)
@@ -37,12 +34,6 @@ public class TransactionController {
         t.setDescription("Rs"+ obj.getAmount()+" Deposit Successful");
         t.setUserId(obj.getId());
         transactionRepo.save(t);
-        Notification n = new Notification();
-        n.setUser(user);
-        n.setMessage("Rs " + obj.getAmount() + " deposited successfully");
-        n.setCreatedAt(java.time.LocalDateTime.now());
-        n.setRead(false);
-        notificationRepo.save(n);
         return "Deposit Successful";
     }
 
@@ -64,12 +55,6 @@ public class TransactionController {
         t.setDescription("Rs"+ obj.getAmount()+" Withdrawal Successful");
         t.setUserId(obj.getId());
         transactionRepo.save(t);
-        Notification n = new Notification();
-        n.setUser(user);
-        n.setMessage("Rs " + obj.getAmount() + " withdrawn successfully");
-        n.setCreatedAt(java.time.LocalDateTime.now());
-        n.setRead(false);
-        notificationRepo.save(n);
         return "Withdrawal Successful";
     }
 
@@ -107,20 +92,6 @@ public class TransactionController {
 
         transactionRepo.save(t1);
         transactionRepo.save(t2);
-        Notification n1 = new Notification();
-        n1.setUser(sender);
-        n1.setMessage("Rs " + obj.getAmount() + " sent to " + rec.getUsername());
-        n1.setCreatedAt(java.time.LocalDateTime.now());
-        n1.setRead(false);
-
-        notificationRepo.save(n1);
-        Notification n2 = new Notification();
-        n2.setUser(rec);
-        n2.setMessage("Rs " + obj.getAmount() + " received from " + sender.getUsername());
-        n2.setCreatedAt(java.time.LocalDateTime.now());
-        n2.setRead(false);
-
-        notificationRepo.save(n2);
         return "Transfer Done SuccessfulLy";
     }
 
