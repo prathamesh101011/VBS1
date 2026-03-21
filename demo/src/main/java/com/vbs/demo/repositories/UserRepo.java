@@ -10,12 +10,16 @@ import java.util.List;
 
 
 @Repository
+
 public interface UserRepo extends JpaRepository<User, Integer> {
+
     User findByUsername(String username);
 
-    User findByEmail(String value);
+    User findByEmail(String email);
 
-    List<User> findAllByRole(String customer, Sort sort);
+    User findByRole(String role);
 
-    List<User> findByUsernameContainingIgnoreCaseAndRole(String keyword, String customer);
+    List<User> findAllByRole(String role, Sort sort);
+
+    List<User> findByUsernameContainingIgnoreCaseAndRole(String username, String role);
 }
